@@ -1,0 +1,15 @@
+---
+
+jobs:
+- name: trigger-job
+  public: true
+  plan:
+    - task: call-second
+      config:
+        platform: linux
+        image_resource:
+          type: docker-image
+          source: {repository: yauritux/busybox-curl}
+        run:
+          path: curl
+          args: ["-X","POST","http://172.19.96.1:8087/api/v1/teams/main/pipelines/second/resources/trigger/check/webhook?webhook_token=hello"]

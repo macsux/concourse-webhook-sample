@@ -1,0 +1,23 @@
+---
+resources:
+- name: trigger
+  type: time
+  source: {interval: 30s}
+  check_every: 12h
+  webhook_token: hello 
+
+jobs:
+- name: second
+  public: true
+  plan:
+    - get: trigger
+      trigger: true
+    - task: second
+      config:
+        platform: linux
+        image_resource:
+          type: docker-image
+          source: {repository: busybox}
+        run:
+          path: echo
+          args: [hello world]
